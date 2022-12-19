@@ -7,17 +7,20 @@ class App extends Component {
   componentDidMount() {
     this.props.requestData();
   }
-
   render() {
-    console.log(">>state", this.props.apiResponseStoredInReduxState);
+    console.log(">>>state", this.props.apiResponseStoredInReduxState);
     return (
       <div className="App">
         <ul>
-          {this.props.apiResponseStoredInReduxState.data.map((item) => (
-            <li key={item.app_id}>
-              App id: {item.app_id} Clicks: {item.clicks}
-            </li>
-          ))}
+          {!this.props.apiResponseStoredInReduxState.isPending ? (
+            this.props.apiResponseStoredInReduxState.data.map((item, index) => (
+              <li key={index}>
+                App id: {item.app_id} Clicks: {item.clicks}
+              </li>
+            ))
+          ) : (
+            <div>Loading...</div>
+          )}
         </ul>
       </div>
     );
